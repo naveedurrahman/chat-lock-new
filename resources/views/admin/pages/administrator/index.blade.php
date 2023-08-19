@@ -2,6 +2,18 @@
 @section('content')
     <div class="container-xl">
         <!-- Your home page content goes here -->
+        @if (session('success'))
+            <div class=" alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session('destroy'))
+            <div class=" alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('destroy') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="boxes">
 
             <div class="title">Adminstrator
@@ -16,136 +28,39 @@
             <div class="card-body perfect-scrollbar ps ps--active-y" data-mdb-perfect-scrollbar="true"
                 style="position: relative; height: auto">
 
+                <table class="table">
+                    @foreach ($user as $item)
+                        <tbody class="m-2">
+                            <tr>
+                                <th scope="col">
+                                    <img src="{{ asset($item->image) }}" class="shadow-1-strong rounded-circle"
+                                        alt="avatar 1" style="width: 55px; height: 55px;">
+                                </th>
+                                <td scope="col" style=" flex-direction: column;">
+                                    <br>
+                                    <span class="mt-1">{{ $item->name }}</span>
+                                </td>
+                                <td scope="col">
+                                    <br>
+                                    <span class="mt-1">{{ $item->email }}</span>
+                                </td>
+                                <td scope="col">
+                                    <br>
+                                    <span class="mt-1">{{ $item->number }}</span>
+                                </td>
 
-                <div class="container-xxl content">
-                    <div class="row g-2" style="display: flex; align-items: center; justify-content: space-between;">
-                        <div class="col-6  col-md-6 col-lg-6 col-xl-6">
-                            <div class="p-3 mt-2 border rounded"
-                                style="display: flex; align-items: center; justify-content: space-between;">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="img shadow-1-strong rounded-circle m-2" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0;">MicleClark</h6>
-                                    <p style="margin: 0;">1234566</p>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0"><i
-                                            class="bx bxs-chat mr-3 font-weight-bold"
-                                            style="color: forestgreen; font-size: 16px;"></i>Client</h6>
-                                    <p style="margin: 0;">12</p>
-                                </div>
-                                <i class='bx bx-dots-vertical' style="margin-bottom: 30px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-6  col-md-6 col-lg-6 col-xl-6">
-                            <div class="p-3 mt-2 border rounded"
-                                style="display: flex; align-items: center; justify-content: space-between;">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="img shadow-1-strong rounded-circle m-2" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0;">MicleClark</h6>
-                                    <p style="margin: 0;">1234566</p>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0"><i
-                                            class="bx bxs-chat mr-3 font-weight-bold"
-                                            style="color: forestgreen; font-size: 16px;"></i>Client</h6>
-                                    <p style="margin: 0;">12</p>
-                                </div>
-                                <i class='bx bx-dots-vertical' style="margin-bottom: 30px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-6  col-md-6 col-lg-6 col-xl-6">
-                            <div class="p-3 mt-2 border rounded"
-                                style="display: flex; align-items: center; justify-content: space-between;">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="img shadow-1-strong rounded-circle m-2" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0;">MicleClark</h6>
-                                    <p style="margin: 0;">1234566</p>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0"><i
-                                            class="bx bxs-chat mr-3 font-weight-bold"
-                                            style="color: forestgreen; font-size: 16px;"></i>Client</h6>
-                                    <p style="margin: 0;">12</p>
-                                </div>
-                                <i class='bx bx-dots-vertical' style="margin-bottom: 30px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-6  col-md-6 col-lg-6 col-xl-6">
-                            <div class="p-3 mt-2 border rounded"
-                                style="display: flex; align-items: center; justify-content: space-between;">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="img shadow-1-strong rounded-circle m-2" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0;">MicleClark</h6>
-                                    <p style="margin: 0;">1234566</p>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0"><i
-                                            class="bx bxs-chat mr-3 font-weight-bold"
-                                            style="color: forestgreen; font-size: 16px;"></i>Client</h6>
-                                    <p style="margin: 0;">12</p>
-                                </div>
-                                <i class='bx bx-dots-vertical' style="margin-bottom: 30px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-6  col-md-6 col-lg-6 col-xl-6">
-                            <div class="p-3 mt-2 border rounded"
-                                style="display: flex; align-items: center; justify-content: space-between;">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="img shadow-1-strong rounded-circle m-2" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0;">MicleClark</h6>
-                                    <p style="margin: 0;">1234566</p>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0"><i
-                                            class="bx bxs-chat mr-3 font-weight-bold"
-                                            style="color: forestgreen; font-size: 16px;"></i>Client</h6>
-                                    <p style="margin: 0;">12</p>
-                                </div>
-                                <i class='bx bx-dots-vertical' style="margin-bottom: 30px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-6  col-md-6 col-lg-6 col-xl-6">
-                            <div class="p-3 mt-2 border rounded"
-                                style="display: flex; align-items: center; justify-content: space-between;">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="img shadow-1-strong rounded-circle m-2" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0;">MicleClark</h6>
-                                    <p style="margin: 0;">1234566</p>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <h6 class="font-weight-bold" style="margin: 0"><i
-                                            class="bx bxs-chat mr-3 font-weight-bold"
-                                            style="color: forestgreen; font-size: 16px;"></i>Client</h6>
-                                    <p style="margin: 0;">12</p>
-                                </div>
-                                <i class='bx bx-dots-vertical' style="margin-bottom: 30px;"></i>
-                            </div>
-                        </div>
+                                <td scope="col">
+                                    <form action="{{ route('adminstrator.destroy', $item->id) }}" method="post">
+                                        @csrf
+                                        <button class="btn btn-danger mt-2">DELETE</button>
+                                    </form>
+                                </td>
 
 
-
-                    </div>
-
-
-                </div>
-
+                            </tr>
+                        </tbody>
+                    @endforeach
+                </table>
 
 
 
@@ -192,21 +107,21 @@
 
                 <!-- End -->
                 <!-- <li class="item">
-                                              <div href="#" class="nav_link submenu_item">
-                                                <span class="navlink_icon">
-                                                  <i class="bx bx-home-alt"></i>
-                                                </span>
-                                                <span class="navlink">Home</span>
-                                                <i class="bx bx-chevron-right arrow-left"></i>
-                                              </div>
+                                                                                                                                                                                                                                                                                                  <div href="#" class="nav_link submenu_item">
+                                                                                                                                                                                                                                                                                                    <span class="navlink_icon">
+                                                                                                                                                                                                                                                                                                      <i class="bx bx-home-alt"></i>
+                                                                                                                                                                                                                                                                                                    </span>
+                                                                                                                                                                                                                                                                                                    <span class="navlink">Home</span>
+                                                                                                                                                                                                                                                                                                    <i class="bx bx-chevron-right arrow-left"></i>
+                                                                                                                                                                                                                                                                                                  </div>
 
-                                              <ul class="menu_items submenu">
-                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                              </ul>
-                                            </li> -->
+                                                                                                                                                                                                                                                                                                  <ul class="menu_items submenu">
+                                                                                                                                                                                                                                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                                                                  </ul>
+                                                                                                                                                                                                                                                                                                </li> -->
                 <!-- end -->
 
                 <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->

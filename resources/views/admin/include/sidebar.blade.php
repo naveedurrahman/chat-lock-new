@@ -12,10 +12,17 @@
         </li>
         <li>
             <div class="iocn-link">
-                <a href="{{ route('adminstrator.index') }}">
-                    <i class='bx bx-windows'></i>
-                    <span class="link_name">Set Up</span>
-                </a>
+                @hasrole('superadmin')
+                    <a href="{{ route('adminstrator.index') }}">
+                        <i class='bx bx-windows'></i>
+                        <span class="link_name">Set Up</span>
+                    </a>
+                @else
+                    <a href="{{ route('agent.index') }}">
+                        <i class='bx bx-windows'></i>
+                        <span class="link_name">Set Up</span>
+                    </a>
+                @endhasrole
 
                 <i class='bx bxs-chevron-down arrow'></i>
             </div>
@@ -25,8 +32,6 @@
                     <hr>
                 @endhasrole
                 <li><a href="{{ route('agent.index') }}">Agent</a></li>
-                <hr>
-                <li><a href="{{ route('client.index') }}">Client</a></li>
             </ul>
         </li>
 
