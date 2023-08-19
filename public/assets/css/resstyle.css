@@ -1,0 +1,108 @@
+/* Medium devices (landscape tablets, 768px and up) */
+@media (max-width: 768px) {
+    .search-field .search-btn {
+        height: 70% !important;
+    }
+
+    .search-field input {
+        height: 70% !important;
+        font-size: 10px;
+    }
+
+    .dashboard .container .row {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+
+/* client Page and subadministrator Responsive I use Same classes for both because there are
+same pages avoid to repeat the code I give him class names rowres..and col res and also
+a side bar*/
+@media (max-width: 768px) {
+
+    .resbox .table,
+    .resbox .table th,
+    .resbox .table td,
+    .resbox .table tr {
+        display: block;
+        width: 100%;
+        padding: 0;
+        height: 100%;
+    }
+
+    .resrow {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0px;
+        margin: 0;
+
+    }
+
+    .resrow .col-4 {
+        max-width: 100%;
+        padding-left: -70px;
+    }
+
+    .rescol {
+        min-width: 100%;
+        height: auto;
+        margin-top: 10px;
+        margin-left: 0px !important;
+    }
+
+    .resCont button {
+        font-size: 8px;
+        padding: 10px;
+    }
+
+    .resCont .search-field {
+        height: 45px;
+        margin-left: 10px;
+    }
+
+    /* sidebar responsive */
+    .sidebar-1 {
+        left: 0;
+        top: 62px;
+        z-index: 999;
+        width: 30%;
+        padding-left: 0;
+
+    }
+
+    .sidebar-1 .menu_title {
+        font-size: 14px !important;
+    }
+
+    .bottom_content {
+        display: none;
+    }
+
+}
+
+@media (max-width: 575px) {
+    .col-8 h5 {
+        font-size: 16px;
+    }
+
+    .resrow h6,
+    h5 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sidebar-1 {
+        left: 0;
+        top: 62px;
+        z-index: 999;
+        width: 30%;
+    }
+
+    .bottom_content {
+        display: none;
+    }
+}
