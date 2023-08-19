@@ -6,7 +6,6 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\agent\AgentController;
 use App\Http\Controllers\super\SuperController;
 use App\Http\Controllers\admin\AdminAgentController;
-use App\Http\Controllers\admin\AdminClientController;
 use App\Http\Controllers\admin\AdminNumberController;
 use App\Http\Controllers\admin\AdminAdminstratorController;
 
@@ -65,12 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('adminstrator')->name('adminstrator.')->group(function () {
         Route::get('index', [AdminAdminstratorController::class, 'index'])->name('index');
         Route::get('create', [AdminAdminstratorController::class, 'create'])->name('create');
-    });
+        Route::post('store', [AdminAdminstratorController::class, 'store'])->name('store');
+        Route::post('delete/{id}', [AdminAdminstratorController::class, 'destroy'])->name('destroy');
 
-    Route::prefix('client')->name('client.')->group(function () {
-        Route::get('index', [AdminClientController::class, 'index'])->name('index');
-        Route::get('activeclient', [AdminClientController::class, 'activeclient'])->name('activeclient');
-        Route::get('inactiveclient', [AdminClientController::class, 'inactiveclient'])->name('inactiveclient');
-        Route::get('create', [AdminClientController::class, 'create'])->name('create');
+
     });
 });

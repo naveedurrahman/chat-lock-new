@@ -13,106 +13,87 @@
             <div class="card-body perfect-scrollbar ps ps--active-y" data-mdb-perfect-scrollbar="true"
                 style="position: relative; height: auto">
 
-                <div class="agent-box">
-                    <div class="container-xxl subadmins">
+                <form action="{{ route('adminstrator.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="agent-box">
+                        <div class="container-xxl subadmins">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h6>Images</h6>
+                                    <div class="card-2">
+                                        <h4>Upload Files</h4>
+                                        <div class="drop_box">
+                                            <header>
+                                                <h4>Select File here</h4>
+                                            </header>
+                                            <p>
+                                                <button id="cancel-image"
+                                                    style="display: none; margin-bottom: 5px; padding: 5px 10px 5px 10px; font-size: 20px;border: none;font-weight:20px;background-color:black;border-radius:50%;color:white;">x</button>
+                                                <img id="image-preview" src="#" alt="Image Preview"
+                                                    style="display: none; max-width: 100%; max-height: 100% ;object-fit:cover; ">
+
+                                            </p>
+                                            <label class="file-label">
+                                                <input type="file" name="image" class="file-input" id="image-input">
+                                                Choose File
+                                            </label>
+                                        </div>
+                                        @error('image')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <h6>Name</h6>
+                                    <div class="search_ba">
+                                        <input type="text" name="name" placeholder="Alarm wixx">
+                                    </div>
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    <p class="d-flex align-item-center justify-content-between my-3">Password</p>
+                                    <div class="search_ba">
+                                        <input type="text" name="password" placeholder="*******************">
+                                    </div>
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+                                <div class="col-3">
+                                    <h6>Email</h6>
+                                    <div class="search_ba">
+                                        <input type="text" name="email" placeholder="wix@gmail.com">
+                                    </div>
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    <p class="d-flex align-item-center justify-content-between my-3">Phone</p>
+                                    <div class="search_ba">
+                                        <input type="number" name="number" placeholder="+92">
+                                    </div>
+                                    @error('number')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-xxl my-5 ml-5 " style="display: flex; justify-content:flex-end;">
                         <div class="row">
                             <div class="col-6">
-                                <h6>Images</h6>
-                                <div class="card-2">
-                                    <h4>Upload Files</h4>
-                                    <div class="drop_box">
-                                        <header>
-                                            <h4>Select File here</h4>
-                                        </header>
-                                        <p>Files Supported: PDF, TEXT, DOC , DOCX</p>
-                                        <input type="file" hidden accept=".doc,.docx,.pdf" id="fileID"
-                                            style="display:none;">
-                                        <button class="btn-1">Choose File</button>
-                                    </div>
-
-                                </div>
+                                <button type="button" class="btn btn-outline-info " style="border-radius: 22px;"><a
+                                        href="{{ route('adminstrator.index') }}"
+                                        class="text-dark text-decoration-none">Cancel</a></button>
                             </div>
-                            <div class="col-3">
-                                <h6>Name</h6>
-                                <div class="search_ba">
-                                    <input type="text" placeholder="Alarm wixx">
-                                </div>
-                                <p class="d-flex align-item-center justify-content-between my-3">Password</p>
-                                <div class="search_ba">
-                                    <input type="text" placeholder="*******************">
-                                </div>
-
-                                <button type="button" class="btn btn-outline-success p-2 my-4" style="border-radius: 25px;"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Asign Agent
-                                </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Chose A Number</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <span><input type="checkbox" class="mr-2"> <a
-                                                        href="">123456789</a></span>
-                                                <hr>
-                                                <span><input type="checkbox" class="mr-2"> <a
-                                                        href="">123456789</a></span>
-                                                <hr>
-                                                <span><input type="checkbox" class="mr-2"> <a
-                                                        href="">123456789</a></span>
-                                                <hr>
-                                                <span><input type="checkbox" class="mr-2"> <a
-                                                        href="">123456789</a></span>
-                                                <hr>
-                                                <span><input type="checkbox" class="mr-2"> <a
-                                                        href="">123456789</a></span>
-                                                <hr>
-                                                <span><input type="checkbox" class="mr-2"> <a
-                                                        href="">123456789</a></span>
-                                                <hr>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary w-100">confirm</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="col-3">
-                                <h6>Email</h6>
-                                <div class="search_ba">
-                                    <input type="text" placeholder="wix@gmail.com">
-                                </div>
-                                <p class="d-flex align-item-center justify-content-between my-3">Phone</p>
-                                <div class="search_ba">
-                                    <input type="number" placeholder="+92">
-                                </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-outline-success"
+                                    style="border-radius: 22px;">create</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container-xxl my-5 ml-5">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-outline-info " style="border-radius: 22px;"><a
-                                    href="{{ route('adminstrator.index') }}"
-                                    class="text-dark text-decoration-none">Cancel</a></button>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary mt-2 ml-3"
-                                style="border-radius: 22px;">Confirm</button>
-                        </div>
-                    </div>
-                </div>
+                </form>
 
 
                 <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
@@ -155,21 +136,21 @@
 
                 <!-- End -->
                 <!-- <li class="item">
-                                                                                  <div href="#" class="nav_link submenu_item">
-                                                                                    <span class="navlink_icon">
-                                                                                      <i class="bx bx-home-alt"></i>
-                                                                                    </span>
-                                                                                    <span class="navlink">Home</span>
-                                                                                    <i class="bx bx-chevron-right arrow-left"></i>
-                                                                                  </div>
+                                                                                                                                                                                                                                                          <div href="#" class="nav_link submenu_item">
+                                                                                                                                                                                                                                                            <span class="navlink_icon">
+                                                                                                                                                                                                                                                              <i class="bx bx-home-alt"></i>
+                                                                                                                                                                                                                                                            </span>
+                                                                                                                                                                                                                                                            <span class="navlink">Home</span>
+                                                                                                                                                                                                                                                            <i class="bx bx-chevron-right arrow-left"></i>
+                                                                                                                                                                                                                                                          </div>
 
-                                                                                  <ul class="menu_items submenu">
-                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                    <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                  </ul>
-                                                                                </li> -->
+                                                                                                                                                                                                                                                          <ul class="menu_items submenu">
+                                                                                                                                                                                                                                                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                                                                                                                                                          </ul>
+                                                                                                                                                                                                                                                        </li> -->
                 <!-- end -->
 
                 <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
@@ -205,3 +186,31 @@
         </div>
     </nav>
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.getElementById('image-input');
+        const imagePreview = document.getElementById('image-preview');
+        const cancelImageBtn = document.getElementById('cancel-image');
+
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    cancelImageBtn.style.display = 'inline-block';
+                };
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        cancelImageBtn.addEventListener('click', function() {
+            imageInput.value = ''; // Clear the selected file
+            imagePreview.src = '';
+            imagePreview.style.display = 'none';
+            cancelImageBtn.style.display = 'none';
+        });
+    });
+</script>
