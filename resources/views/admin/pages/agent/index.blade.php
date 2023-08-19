@@ -1,6 +1,18 @@
 @extends('admin.main')
 @section('content')
     <div class="container-xl">
+        @if (session('message'))
+            <div class=" alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('message') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session('danger'))
+            <div class=" alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('danger') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <!-- Your home page content goes here -->
         <div class="boxes">
 
@@ -16,168 +28,83 @@
             <div class="card-body perfect-scrollbar ps ps--active-y" data-mdb-perfect-scrollbar="true"
                 style="position: relative; height: auto">
 
+                @if ($data->isEmpty())
+                    <label for="" class="alert-success"
+                        style="padding: 20px;text-transform:capitalize;width:100%;text-align:center;">
+                        No
+                        agents
+                        availible right Now </label>
+                @else
+                    <table class="table">
 
-                <table class="table">
+                        <tbody class="m-2">
+                            @foreach ($data as $key => $item)
+                                <tr>
 
-                    <tbody class="m-2">
-                        <tr>
-                            <th scope="col">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp"
-                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                            </th>
-                            <td scope="col" style=" flex-direction: column;">Alika
-                                <span class="mt-1">12345</span>
-                            </td>
-                            <td scope="col">
-                                Chat
-                                <br>
-                                <span class="mt-1">15</span>
-                            </td>
-                            <td scope="col">Active
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
+                                    <th scope="col">
+                                        <img src="{{ $item->image }}" class="shadow-1-strong rounded-circle img-fluid"
+                                            alt="avatar 1" style="width: 60px; height: 60px; object-fit: cover;">
+                                    </th>
+                                    <td scope="col" style=" flex-direction: column;">
+                                        <span class="mt-1">{{ $item->name }}</span>
+                                    </td>
 
-                            <td scope="col">Block
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
+                                    <td scope="col" style=" flex-direction: column;">
+                                        <span class="mt-1">{{ $item->email }}</span>
+                                    </td>
 
-                            <td scope="col"><button type="button" class="btn btn-outline-danger p-1"
-                                    style="border-radius: 22px;">inactive</button></td>
-                        </tr>
-                    </tbody>
+                                    <td scope="col">
+                                        <form
+                                            action="{{ route('agent.status', ['change' => $item->status, 'id' => $item->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @if ($item->status == '1')
+                                                <button type="submit" class="btn btn-outline-success p-1"
+                                                    style="border-radius: 22px;">Active</button>
+                                            @elseif($item->status == '0')
+                                                <button type="submit" class="btn btn-outline-danger p-1"
+                                                    style="border-radius: 22px;">unactive</button>
+                                            @endif
+                                        </form>
+                                    </td>
+                                    <td>
+                                        @if ($item->status === '0')
+                                            <div class="mr-2" style="display: flex; justify-content: flex-start;">
+                                                <a href="{{ route('agent.edit', ['id' => $item->id]) }}"
+                                                    class="btn btn-info" style="text-decoration: none; margin-right: 10px;">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                        @endif
+                                        <form action="{{ route('agent.delete', ['id' => $item->id]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger" style="text-decoration: none;">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
 
-                    <tbody class="m-2">
-                        <tr>
-                            <th scope="col">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                            </th>
-                            <td scope="col" style=" flex-direction: column;">Alika
-                                <span class="mt-1">12345</span>
-                            </td>
-                            <td scope="col">
-                                Chat
-                                <br>
-                                <span class="mt-1">15</span>
-                            </td>
-                            <td scope="col">Active
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col">Block
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col"><button type="button" class="btn btn-outline-success p-1"
-                                    style="border-radius: 22px;">Active</button></td>
-                        </tr>
-                    </tbody>
-
-                    <tbody class="m-2">
-                        <tr>
-                            <th scope="col">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp"
-                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                            </th>
-                            <td scope="col" style=" flex-direction: column;">Alika
-                                <span class="mt-1">12345</span>
-                            </td>
-                            <td scope="col">
-                                Chat
-                                <br>
-                                <span class="mt-1">15</span>
-                            </td>
-                            <td scope="col">Active
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col">Block
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col"><button type="button" class="btn btn-outline-danger p-1"
-                                    style="border-radius: 22px;">inactive</button></td>
-                        </tr>
-                    </tbody>
-
-                    <tbody class="m-2">
-                        <tr>
-                            <th scope="col">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp"
-                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                            </th>
-                            <td scope="col" style=" flex-direction: column;">Alika
-                                <span class="mt-1">12345</span>
-                            </td>
-                            <td scope="col">
-                                Chat
-                                <br>
-                                <span class="mt-1">15</span>
-                            </td>
-                            <td scope="col">Active
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col">Block
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col"><button type="button" class="btn btn-outline-success p-1"
-                                    style="border-radius: 22px;">Active</button></td>
-                        </tr>
-                    </tbody>
-
-                    <tbody class="m-2">
-                        <tr>
-                            <th scope="col">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp"
-                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                    style="width: 55px; height: auto;">
-                            </th>
-                            <td scope="col" style=" flex-direction: column;">Alika
-                                <span class="mt-1">12345</span>
-                            </td>
-                            <td scope="col">
-                                Chat
-                                <br>
-                                <span class="mt-1">15</span>
-                            </td>
-                            <td scope="col">Active
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col">Block
-                                <br>
-                                <span class="mt-1">150+</span>
-                            </td>
-
-                            <td scope="col"><button type="button" class="btn btn-outline-danger p-1"
-                                    style="border-radius: 22px;">inactive</button></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-
-
-
-                <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                    <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                </div>
+                                            <a href="#" class="btn btn-success"
+                                                style="text-decoration: none;">
+                                                <i class="fas fa-trash-alt"></i> Chat history
+                                            </a>
+                                        </form>
             </div>
+
         </div>
+        </form>
+        </td>
+        </tr>
+        @endforeach
+        </tbody>
+
+        </table>
+        @endif
+
+
+
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        </div>
+    </div>
+    </div>
     </div>
     <!-- sidebar -->
     </div>
@@ -230,21 +157,21 @@
                 </li>
                 <!-- End -->
                 <!-- <li class="item">
-                                                                      <div href="#" class="nav_link submenu_item">
-                                                                        <span class="navlink_icon">
-                                                                          <i class="bx bx-home-alt"></i>
-                                                                        </span>
-                                                                        <span class="navlink">Home</span>
-                                                                        <i class="bx bx-chevron-right arrow-left"></i>
-                                                                      </div>
+                                                                                                              <div href="#" class="nav_link submenu_item">
+                                                                                                                <span class="navlink_icon">
+                                                                                                                  <i class="bx bx-home-alt"></i>
+                                                                                                                </span>
+                                                                                                                <span class="navlink">Home</span>
+                                                                                                                <i class="bx bx-chevron-right arrow-left"></i>
+                                                                                                              </div>
 
-                                                                      <ul class="menu_items submenu">
-                                                                        <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                        <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                        <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                        <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                      </ul>
-                                                                    </li> -->
+                                                                                                              <ul class="menu_items submenu">
+                                                                                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                                <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                              </ul>
+                                                                                                            </li> -->
                 <!-- end -->
 
                 <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->

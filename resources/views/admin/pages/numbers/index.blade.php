@@ -26,11 +26,19 @@
                     style="border-radius: 22px;">Add Number</button>
                 <i class='bx bx-dots-vertical'></i>
             </div>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    <p> {{ session('success') }}</p>
+            @if (session('danger'))
+                <div class=" alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('danger') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            @if (session('message'))
+                <div class=" alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <!-- modal -->
 
 
@@ -105,7 +113,7 @@
             <div style="display: flex;justify-content:center;">
 
                 <p class="alert-success" style="padding: 20px;text-transform:capitalize;width:100%;text-align:center;">No
-                    data available.</p>
+                    Numbers available.</p>
             </div>
         @else
             <table class="table table-light">
@@ -129,24 +137,23 @@
                                     @csrf
                                     @if ($item->status == '1')
                                         <button type="submit" class="btn btn-outline-success p-1"
-                                            style="border-radius: 22px;">Active</button>
+                                            style="border-radius: 22px;">Enable</button>
                                     @elseif($item->status == '0')
                                         <button type="submit" class="btn btn-outline-danger p-1"
-                                            style="border-radius: 22px;">unactive</button>
+                                            style="border-radius: 22px;">Disable</button>
                                     @endif
                                 </form>
 
                             </td>
                             <td>
-                                <div style="display: flex;justify-content:flex-start;">
-                                    <a href="{{ route('number.edit', ['id' => $item->id]) }}"
-                                        class="btn btn-link ml-2 p-1 text-success " style="text-decoration: none;">
+                                <div class="mr-2" style="display: flex; justify-content: flex-start;">
+                                    <a href="{{ route('number.edit', ['id' => $item->id]) }}" class="btn btn-info"
+                                        style="text-decoration: none; margin-right: 10px;">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
-                                    <form action=" {{ route('number.delete', ['id' => $item->id]) }}" method="POST">
+                                    <form action="{{ route('number.delete', ['id' => $item->id]) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-link ml-2 p-1 text-danger"
-                                            style="text-decoration: none;">
+                                        <button type="submit" class="btn btn-danger" style="text-decoration: none;">
                                             <i class="fas fa-trash-alt"></i> Delete
                                         </button>
                                 </div>
@@ -159,10 +166,6 @@
         @endif
 
 
-        <!--
-                                                                                                            <div class="ps__rail-x" style="left: 0px; bottom: 200px;">
-                                                                                                              <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                                                                                                            </div> -->
     </div>
     </div>
     </div>

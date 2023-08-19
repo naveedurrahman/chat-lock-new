@@ -15,8 +15,8 @@ class AdminAgentController extends Controller
      */
     public function index()
     {
-
-        return view('admin.pages.agent.index');
+        $data = User::role('agent')->where('name', '!=', 'agent')->get();
+        return view('admin.pages.agent.index')->with(compact('data'));
     }
 
     /**
@@ -24,7 +24,7 @@ class AdminAgentController extends Controller
      */
     public function create()
     {
-        $number = Number::get();
+        $number = Number::where('status','1')->get();
         $assignednumber = NumberAgent::pluck('number_id')->all();
         $data = $number->whereNotIn('id', $assignednumber);
 
@@ -33,31 +33,57 @@ class AdminAgentController extends Controller
 
     public function activeagent()
     {
-        return view('admin.pages.agent.active');
+        $active = User::role('agent')->where('status', '1')->where('name', '!=', 'agent')->get();
+        return view('admin.pages.agent.active')->with(compact('active'));
     }
 
     public function inactiveagent()
     {
-        return view('admin.pages.agent.inactive');
+        $unactive = User::role('agent')->where('status', '0')->where('name', '!=', 'agent')->get();
+
+        return view('admin.pages.agent.inactive')->with(compact('unactive'));;
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'name' => 'required',
+            'image' => 'required', // Validate the uploaded image
+            'number_id'=>'required',
+        ],[
+            'number_id.required' => 'The Assign Number field is required.',
+
+        ]);
+
         $record = new User();
-        $record->email = $request['email'];
-        $record->name = $request['name'];
+        $record->email = $validatedData['email'];
+        $record->name = $validatedData['name'];
+        
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('images'), $imageName);
+            $record->image = asset('images/' . $imageName);
+        }
+
         $record->save();
+
         $record->assignRole('agent');
 
         if (isset($request['number_id'])) {
-            foreach ($request['number_id'] as $value) {
+            foreach ($validatedData['number_id'] as $value) {
                 NumberAgent::create(['number_id' => $value, 'agent_id' => $record->id]);
             }
         }
 
-        return back()->with('success', 'Data stored successfully');
+
+        return redirect()->route('agent.index')->with('message', 'Data stored successfully');
     }
 
     /**
@@ -73,7 +99,8 @@ class AdminAgentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = User::find($id);
+        return view('admin.pages.agent.edit')->with(compact('data'));
     }
 
     /**
@@ -81,7 +108,27 @@ class AdminAgentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'name' => 'required',
+            'image' => 'required', // Validate the uploaded image
+        ]);
+
+        $record = User::find($id);
+        $record->email = $validatedData['email'];
+        $record->name = $validatedData['name'];
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('images'), $imageName);
+            $record->image = asset('images/' . $imageName);
+        }
+
+        $record->update();
+
+        return redirect()->route('agent.index')->with('message', 'Data updated successfully');
     }
 
     /**
@@ -89,6 +136,19 @@ class AdminAgentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::destroy($id);
+        return redirect()->route('agent.index')->with('danger', 'Data deleted successfully');
+    }
+
+    public function status($status, $id)
+    {
+
+
+        if ($status == '1') {
+            User::where('status', $status)->where('id', $id)->update(['status' => 0]);
+        } elseif ($status == '0') {
+            User::where('status', $status)->where('id', $id)->update(['status' => 1]);
+        }
+        return back();
     }
 }

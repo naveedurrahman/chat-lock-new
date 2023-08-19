@@ -1,16 +1,16 @@
 @extends('admin.main')
 @section('content')
     <div class="container-xl">
-        @if (session('message'))
+         @if (session('message'))
             <div class=" alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('message') }}
+                   {{session('message')}}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
         <!-- Your home page content goes here -->
         <div class="boxes">
 
-            <div class="title">Create New Agent
+            <div class="title">Update Agent
 
             </div>
 
@@ -18,7 +18,7 @@
         <div class="boxes box-2">
             <div class="card-body perfect-scrollbar ps ps--active-y" data-mdb-perfect-scrollbar="true"
                 style="position: relative; height: auto">
-                <form method="post" action="{{ route('agent.store') }}" enctype="multipart/form-data">
+                <form method="post" action="{{route('agent.update',['id'=>$data->id])}}" enctype="multipart/form-data">
                     @csrf
                     <div class="agent-box">
                         <div class="container-xxl subadmins">
@@ -33,11 +33,10 @@
                                             </header>
                                             <p>
 
-                                                <button id="cancel-image"
-                                                    style="display: none; margin-bottom: 5px; padding: 5px 10px 5px 10px; font-size: 20px;border: none;font-weight:20px;background-color:black;border-radius:50%;color:white;"
-                                                    >x</button>
+                                                {{-- <a href="" id="cancel-image"
+                                                    style="display: none;margin-bottom:5px;">Cancel</a> --}}
                                                 <img id="image-preview" src="#" alt="Image Preview"
-                                                    style="display: none; max-width: 100%; max-height: 100% ;object-fit:cover; ">
+                                                    style="display: none; max-width: 100%; max-height: 100% ;object-fit:cover;">
 
                                             </p>
 
@@ -45,96 +44,33 @@
                                                 <input type="file" name="image" class="file-input" id="image-input">
                                                 Choose File
                                             </label>
-
                                         </div>
-                                        @error('image')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                          @error('image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                                     </div>
-
                                 </div>
-
-                                <div class="col-3">
+                            <div class="col-3">
                                     <h6>Name</h6>
                                     <div class="search_ba">
-
-                                        <input type="text" name="name" placeholder="Alarm wixx"
-                                            value="{{ old('name') }}">
-                                        @error('name')
+                                         <input type="text" name="name" value="{{ $data->name }}" placeholder="">
+                                    </div>
+                                     @error('name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                    </div>
-
-                                    <button type="button" class="btn btn-outline-success p-2 my-4"
-                                        style="border-radius: 25px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Assign Numbers
-
-                                    </button> <br>
-                                    @error('number_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Choose a Number</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <span class="anchor">Select Numbers</span>
-                                                    <ul class="items">
-                                                        @if ($data->isEmpty())
-                                                            <label for="" style="text-transform: capitalize;"
-                                                                class="alert alert-danger">No
-                                                                Numbers
-                                                                availible right Now </label>
-                                                        @else
-                                                            @foreach ($data as $item)
-                                                                <li style="list-style:none;padding:5px;"> <input
-                                                                        type="checkbox" name="number_id[]"
-                                                                        value="{{ $item->id }}"
-                                                                        id="number-{{ $item->id }}">
-
-                                                                    <span class="form-check-label"
-                                                                        for="number-{{ $item->id }}">
-
-                                                                        <label for=""
-                                                                            style="text-transform: capitalize;">{{ $item->number }}</label>
-
-                                                                    </span>
-                                                                </li>
-                                                            @endforeach
-                                                        @endif
-                                                    </ul>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">confirm</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-3">
                                     <h6>Email</h6>
                                     <div class="search_ba">
-                                        <input type="email" name="email" value="{{ old('email') }}"
-                                            placeholder="wix@gmail.com">
+                                        <input type="email" name="email" value="{{ $data->email }}" placeholder="">
                                     </div>
-                                    @error('email')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                     @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
                     <div class="container-xxl my-5 ml-5" style="display: flex;justify-content:flex-end;">
                         <div class="row">
                             <div class="col-6">
@@ -209,21 +145,21 @@
                 </li>
                 <!-- End -->
                 <!-- <li class="item">
-                                                                                                                    <div href="#" class="nav_link submenu_item">
-                                                                                                                      <span class="navlink_icon">
-                                                                                                                        <i class="bx bx-home-alt"></i>
-                                                                                                                      </span>
-                                                                                                                      <span class="navlink">Home</span>
-                                                                                                                      <i class="bx bx-chevron-right arrow-left"></i>
-                                                                                                                    </div>
+                                                                                                            <div href="#" class="nav_link submenu_item">
+                                                                                                              <span class="navlink_icon">
+                                                                                                                <i class="bx bx-home-alt"></i>
+                                                                                                              </span>
+                                                                                                              <span class="navlink">Home</span>
+                                                                                                              <i class="bx bx-chevron-right arrow-left"></i>
+                                                                                                            </div>
 
-                                                                                                                    <ul class="menu_items submenu">
-                                                                                                                      <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                                                      <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                                                      <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                                                      <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                                                                                                                    </ul>
-                                                                                                                  </li> -->
+                                                                                                            <ul class="menu_items submenu">
+                                                                                                              <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                              <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                              <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                              <a href="#" class="nav_link sublink">Nav Sub Link</a>
+                                                                                                            </ul>
+                                                                                                          </li> -->
                 <!-- end -->
 
                 <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
