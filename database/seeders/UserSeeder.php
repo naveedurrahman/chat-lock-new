@@ -45,6 +45,8 @@ class UserSeeder extends Seeder
         $user1->name = 'Admin';
         $user1->email = 'admin@gmail.com';
         $user1->password = Hash::make('admin123');
+        $user1->image = 'assets/images/profile.jpg';
+        $user1->number = '+923109704986';
         $user1->save();
         $user1->assignRole('admin');
 
@@ -52,6 +54,7 @@ class UserSeeder extends Seeder
         $user2->name = 'SuperAdmin';
         $user2->email = 'superadmin@gmail.com';
         $user2->password = Hash::make('super123');
+        $user2->image = 'assets/images/profile.jpg';
         $user2->save();
         $user2->assignRole('superadmin');
 
@@ -59,6 +62,7 @@ class UserSeeder extends Seeder
         $user3->name = 'Agent';
         $user3->email = 'agent@gmail.com';
         $user3->password = Hash::make('agent123');
+        $user3->image = 'assets/images/profile.jpg';
         $user3->save();
         $user3->assignRole('agent');
     }

@@ -608,6 +608,14 @@ body {
     left: 135px;
     width: 80%;
 }
+.alert{
+    width: 80%;
+    padding: 20px 30px;
+    margin: 0 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
 
 /* left box */
 .boxes {

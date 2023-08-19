@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminAdminstratorController extends Controller
 {
@@ -12,7 +13,8 @@ class AdminAdminstratorController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.administrator.index');
+        $user = User::role('admin')->get();
+        return view('admin.pages.administrator.index', compact('user'));
     }
 
     /**
@@ -28,7 +30,23 @@ class AdminAdminstratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image' => 'required',
+            'name' => 'required',
+            'password' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'number' => 'required|numeric',
+        ]);
+        $requestdata = $request->all();
+        $image = $request->file('image');
+        $imagename = time() . '.' . $image->getClientOriginalExtension();
+        $request->file('image')->move(public_path('assets/Adminstrator'), $imagename);
+        $imagepath = 'assets/Adminstrator/' . $imagename;
+        $requestdata['image'] = $imagepath;
+        $user = User::create($requestdata);
+        $user->assignRole('admin');
+        return redirect()->route('adminstrator.index')->with('success', 'Administrator created successfully.');
+
     }
 
     /**
@@ -60,6 +78,7 @@ class AdminAdminstratorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::destroy($id);
+        return redirect()->back()->with('destroy', 'Administrator delete successfully.');
     }
 }
