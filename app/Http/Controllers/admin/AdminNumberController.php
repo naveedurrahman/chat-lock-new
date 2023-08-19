@@ -36,7 +36,7 @@ class AdminNumberController extends Controller
             $record = new Number();
             $record->number = $number;
             $record->save();
-            return back()->with('success', 'Data stored successfully');
+            return back()->with('message', 'Data stored successfully');
         }
     }
 
@@ -68,7 +68,7 @@ class AdminNumberController extends Controller
         $record->number = $number;
         $record->update();
 
-        return redirect()->route('number.index')->with('success', 'Data updated successfully');
+        return redirect()->route('number.index')->with('message', 'Data updated successfully');
     }
 
     /**
@@ -77,7 +77,7 @@ class AdminNumberController extends Controller
     public function destroy(string $id)
     {
         Number::destroy($id);
-        return redirect()->route('number.index')->with('success', 'Data deleted successfully');
+        return redirect()->route('number.index')->with('danger', 'Data deleted successfully');
     }
 
     public function status($status, $id)

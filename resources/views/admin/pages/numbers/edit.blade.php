@@ -1,10 +1,11 @@
 @extends('admin.main')
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">
-            <p style="color: #4f39f9"> {{ session('success') }}</p>
-        </div>
-    @endif
+     @if (session('message'))
+            <div class=" alert alert-danger alert-dismissible fade show" role="alert">
+                   {{session('message')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
 
     <div class="container-xl">
@@ -127,10 +128,10 @@
                             @csrf
                             @if ($data->status == '1')
                                 <button type="submit" class="btn btn-outline-success p-1"
-                                    style="border-radius: 22px;">Active</button>
+                                    style="border-radius: 22px;">Enable</button>
                             @elseif($data->status == '0')
                                 <button type="submit" class="btn btn-outline-danger p-1"
-                                    style="border-radius: 22px;">unactive</button>
+                                    style="border-radius: 22px;">Disable</button>
                             @endif
                         </form>
                     </td>

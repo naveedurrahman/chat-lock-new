@@ -44,9 +44,10 @@ Route::middleware('auth')->group(function () {
         Route::get('inactiveagent', [AdminAgentController::class, 'inactiveagent'])->name('inactiveagent');
         Route::get('create', [AdminAgentController::class, 'create'])->name('create');
         Route::post('store', [AdminAgentController::class, 'store'])->name('store');
-        Route::get('edit', [AdminAgentController::class, 'edit'])->name('edit');
-        Route::post('update', [AdminAgentController::class, 'update'])->name('update');
-        Route::post('delete', [AdminAgentController::class, 'delete'])->name('delete');
+        Route::get('edit/{id}', [AdminAgentController::class, 'edit'])->name('edit');
+        Route::post('update/{id}', [AdminAgentController::class, 'update'])->name('update');
+        Route::post('delete/{id}', [AdminAgentController::class, 'destroy'])->name('delete');
+        Route::post('agent-status/{change}/{id}', [AdminAgentController::class, 'status'])->name('status');
     });
 
     // Number route
@@ -56,7 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', [AdminNumberController::class, 'edit'])->name('edit');
         Route::post('update/{id}', [AdminNumberController::class, 'update'])->name('update');
         Route::post('delete/{id}', [AdminNumberController::class, 'destroy'])->name('delete');
-        Route::post('status/{change}/{id}', [AdminNumberController::class, 'status'])->name('status');
+        Route::post('number-status/{change}/{id}', [AdminNumberController::class, 'status'])->name('status');
     });
 
     // Adminstrator route
