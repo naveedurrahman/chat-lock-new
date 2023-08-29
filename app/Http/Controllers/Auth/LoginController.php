@@ -33,7 +33,7 @@ class LoginController extends Controller
         if (auth()->user()->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif (auth()->user()->hasRole('agent')) {
-            return redirect()->route('agent.dashboard');
+            return redirect()->route('user.dashboard');
         } elseif (auth()->user()->hasRole('superadmin')) {
             return redirect()->route('admin.dashboard');
         } else {

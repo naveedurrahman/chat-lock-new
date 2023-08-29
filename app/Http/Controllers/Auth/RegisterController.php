@@ -75,6 +75,6 @@ class RegisterController extends Controller
     protected function registered(Request $request, User $user)
     {
         $user->assignRole('agent');
-        return redirect()->route('agent.dashboard');
+        return redirect()->route('user.dashboard');
     }
 }

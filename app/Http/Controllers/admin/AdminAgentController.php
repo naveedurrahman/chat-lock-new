@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Number;
 use App\Models\NumberAgent;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AdminAgentController extends Controller
 {
@@ -24,7 +25,7 @@ class AdminAgentController extends Controller
      */
     public function create()
     {
-        $number = Number::where('status','1')->get();
+        $number = Number::where('status', '1')->get();
         $assignednumber = NumberAgent::pluck('number_id')->all();
         $data = $number->whereNotIn('id', $assignednumber);
 
@@ -41,7 +42,8 @@ class AdminAgentController extends Controller
     {
         $unactive = User::role('agent')->where('status', '0')->where('name', '!=', 'agent')->get();
 
-        return view('admin.pages.agent.inactive')->with(compact('unactive'));;
+        return view('admin.pages.agent.inactive')->with(compact('unactive'));
+        ;
     }
     /**
      * Store a newly created resource in storage.
@@ -52,17 +54,20 @@ class AdminAgentController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|email',
             'name' => 'required',
-            'image' => 'required', // Validate the uploaded image
-            'number_id'=>'required',
-        ],[
-            'number_id.required' => 'The Assign Number field is required.',
+            'image' => 'required',
+            'password' => 'required',
+            // Validate the uploaded image
+            'number_id' => 'required',
+        ], [
+                'number_id.required' => 'The Assign Number field is required.',
 
-        ]);
+            ]);
 
         $record = new User();
         $record->email = $validatedData['email'];
         $record->name = $validatedData['name'];
-        
+        $record->password = Hash::make($validatedData['password']);
+
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
